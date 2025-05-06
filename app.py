@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="ADHD Info App", layout="centered")
 
-# Inject custom CSS and JS
+# Inject custom CSS and JavaScript
 st.markdown("""
     <style>
     .stApp {
@@ -21,7 +21,6 @@ st.markdown("""
         color: white;
     }
 
-    /* Style for the tab headers */
     [data-baseweb="tab-list"] {
         justify-content: center;
         gap: 20px;
@@ -53,22 +52,35 @@ st.markdown("""
     </style>
 
     <script>
+    window.addEventListener('load', function() {
+        const expanders = window.parent.document.querySelectorAll('summary');
+        expanders.forEach(e => {
+            e.style.fontSize = '30px';
+            e.style.fontWeight = 'bold';
+            e.style.color = 'white';
+            e.style.border = '2px solid white';
+            e.style.borderRadius = '6px';
+            e.style.padding = '12px';
+            e.style.marginBottom = '4px';
+        });
+    });
+
     function fadeText() {
         const message = document.querySelector('.fade-message');
         if (message) {
             message.style.opacity = 0;
             setTimeout(function() {
                 message.remove();
-            }, 1000);  // Remove the element after fading
+            }, 1000);
         }
     }
     </script>
 """, unsafe_allow_html=True)
 
-# Tabs for content
+# Create tabs
 tab1, tab2 = st.tabs(["📘 ADHD Info", "📝 Quiz"])
 
-# --- TAB 1: ADHD Information ---
+# --- Tab 1: ADHD Info ---
 with tab1:
     st.title("Understanding the Effects of ADHD")
     st.markdown("Click on an icon to learn more about each effect:")
@@ -83,42 +95,60 @@ with tab1:
         with st.expander(label):
             st.markdown(f"<div style='font-size: 18px; color: white;'>{description}</div>", unsafe_allow_html=True)
 
-# --- TAB 2: Quiz ---
+# --- Tab 2: Quiz ---
 with tab2:
     st.title("Test Your Knowledge About ADHD")
 
-    question = "Which of the following is a common symptom of ADHD?"
-    options = [
+    # --- Question 1 ---
+    question1 = "Which of the following is a common symptom of ADHD?"
+    options1 = [
         "Feeling sad most of the day",
         "Experiencing hallucinations",
         "Difficulty paying attention",
         "Sudden muscle spasms"
     ]
-    answer = "Difficulty paying attention"
+    answer1 = "Difficulty paying attention"
 
-    user_answer = st.radio(question, options)
+    user_answer1 = st.radio(question1, options1, key="q1")
 
-    if st.button("Submit Answer"):
-        result_placeholder = st.empty()  # Create a placeholder to display messages
-
-        if user_answer == answer:
-            # Use custom HTML for success message
-            result_placeholder.markdown("""
+    if st.button("Submit Answer to Question 1"):
+        result1 = st.empty()
+        if user_answer1 == answer1:
+            result1.markdown("""
                 <div class="fade-message" style="color: white; font-size: 18px; background-color: green; padding: 10px; border-radius: 8px;">
                     ✅ Correct! Difficulty paying attention is a common symptom.
                 </div>
             """, unsafe_allow_html=True)
         else:
-            # Use custom HTML for error message
-            result_placeholder.markdown("""
+            result1.markdown("""
                 <div class="fade-message" style="color: white; font-size: 18px; background-color: red; padding: 10px; border-radius: 8px;">
                     ❌ Sorry, but that's incorrect. Try again!
                 </div>
             """, unsafe_allow_html=True)
 
-        # JavaScript to fade the message after 3 seconds
-        st.markdown("""
-            <script>
-                setTimeout(fadeText, 3000);  // Wait 3 seconds before fading
-            </script>
-        """, unsafe_allow_html=True)
+        st.markdown("<script>setTimeout(fadeText, 3000);</script>", unsafe_allow_html=True)
+
+    st.markdown("---")  # Separator
+
+    # --- Question 2 ---
+    question2 = "How does a person have ADHD?"
+    options2 = [
+        "Genetics",
+        "Gender",
+        "Age",
+        "Doctor's fault"
+    ]
+    answer2 = "Genetics"
+
+    user_answer2 = st.radio(question2, options2, key="q2")
+
+    if st.button("Submit Answer to Question 2"):
+        result2 = st.empty()
+        if user_answer2 == answer2:
+            result2.markdown("""
+                <div class="fade-message" style="color: white; font-size: 18px; background-color: green; padding: 10px; border-radius: 8px;">
+                    ✅ Correct! People obtain ADHD from genetics.
+                </div>
+            """, unsafe_allow_html=True)
+        else:
+            result2.markdow
