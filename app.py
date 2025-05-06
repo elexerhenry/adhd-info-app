@@ -99,56 +99,7 @@ with tab1:
 with tab2:
     st.title("Test Your Knowledge About ADHD")
 
-    # --- Question 1 ---
-    question1 = "Which of the following is a common symptom of ADHD?"
-    options1 = [
-        "Feeling sad most of the day",
-        "Experiencing hallucinations",
-        "Difficulty paying attention",
-        "Sudden muscle spasms"
-    ]
-    answer1 = "Difficulty paying attention"
-
-    user_answer1 = st.radio(question1, options1, key="q1")
-
-    if st.button("Submit Answer to Question 1"):
-        result1 = st.empty()
-        if user_answer1 == answer1:
-            result1.markdown("""
-                <div class="fade-message" style="color: white; font-size: 18px; background-color: green; padding: 10px; border-radius: 8px;">
-                    ✅ Correct! Difficulty paying attention is a common symptom.
-                </div>
-            """, unsafe_allow_html=True)
-        else:
-            result1.markdown("""
-                <div class="fade-message" style="color: white; font-size: 18px; background-color: red; padding: 10px; border-radius: 8px;">
-                    ❌ Sorry, but that's incorrect. Try again!
-                </div>
-            """, unsafe_allow_html=True)
-
-        st.markdown("<script>setTimeout(fadeText, 3000);</script>", unsafe_allow_html=True)
-
-    st.markdown("---")  # Separator
-
-    # --- Question 2 ---
-    question2 = "How does a person have ADHD?"
-    options2 = [
-        "Genetics",
-        "Gender",
-        "Age",
-        "Doctor's fault"
-    ]
-    answer2 = "Genetics"
-
-    user_answer2 = st.radio(question2, options2, key="q2")
-
-    if st.button("Submit Answer to Question 2"):
-        result2 = st.empty()
-        if user_answer2 == answer2:
-            result2.markdown("""
-                <div class="fade-message" style="color: white; font-size: 18px; background-color: green; padding: 10px; border-radius: 8px;">
-                    ✅ Correct! People obtain ADHD from genetics.
-                </div>
-            """, unsafe_allow_html=True)
-        else:
-            result2.markdow
+    # Store quiz questions
+    questions = [
+        {
+            "qu
