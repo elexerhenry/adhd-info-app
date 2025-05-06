@@ -99,7 +99,7 @@ with tab1:
 with tab2:
     st.title("Test Your Knowledge About ADHD")
 
-    # Store quiz questions
+    # Quiz questions
     questions = [
         {
             "question": "Which of the following is a common symptom of ADHD?",
@@ -127,7 +127,7 @@ with tab2:
         }
     ]
 
-    # Initialize session state
+    # Session state
     if "current_q" not in st.session_state:
         st.session_state.current_q = 0
     if "responses" not in st.session_state:
@@ -136,13 +136,11 @@ with tab2:
     current_index = st.session_state.current_q
     q = questions[current_index]
 
-    # Render question and options
     st.subheader(f"Question {current_index + 1}")
     user_response = st.radio(q["question"], q["options"], key=f"question_{current_index}")
 
     result_placeholder = st.empty()
 
-    # Submit button
     if st.button("Submit Answer"):
         st.session_state.responses[current_index] = user_response
         if user_response == q["answer"]:
@@ -157,13 +155,7 @@ with tab2:
             )
         st.markdown("<script>setTimeout(fadeText, 3000);</script>", unsafe_allow_html=True)
 
-    # Navigation buttons
-    col1, col2, col3 = st.columns([1, 2, 1])
-
-    with col1:
-        if current_index > 0 and st.button("⬅ Back"):
-            st.session_state.current_q -= 1
-
-    with col3:
-        if current_index < len(questions) - 1 and st.button("Next ➡"):
+    # Navigation (Next only)
+    if current_index < len(questions) - 1:
+        if st.button("Next ➡"):
             st.session_state.current_q += 1
