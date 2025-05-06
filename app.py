@@ -1,3 +1,10 @@
+services:
+  - type: web
+    name: my-streamlit-app
+    env: python
+    buildCommand: ""
+    startCommand: streamlit run app.py --server.port=$PORT --server.enableCORS=false
+    plan: free
 import streamlit as st
 
 st.set_page_config(page_title="ADHD Info App", layout="centered")
