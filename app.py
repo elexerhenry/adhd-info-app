@@ -77,7 +77,7 @@ st.markdown("""
     </script>
 """, unsafe_allow_html=True)
 
-# Create tabs
+# Tabs
 tab1, tab2 = st.tabs(["📘 ADHD Info", "📝 Quiz"])
 
 # --- Tab 1: ADHD Info ---
@@ -99,7 +99,7 @@ with tab1:
 with tab2:
     st.title("Test Your Knowledge About ADHD")
 
-    # Quiz questions
+    # Questions
     questions = [
         {
             "question": "Which of the following is a common symptom of ADHD?",
@@ -132,6 +132,8 @@ with tab2:
         st.session_state.current_q = 0
     if "responses" not in st.session_state:
         st.session_state.responses = [None] * len(questions)
+    if "submitted" not in st.session_state:
+        st.session_state.submitted = [False] * len(questions)
 
     current_index = st.session_state.current_q
     q = questions[current_index]
@@ -142,20 +144,24 @@ with tab2:
     result_placeholder = st.empty()
 
     if st.button("Submit Answer"):
-        st.session_state.responses[current_index] = user_response
-        if user_response == q["answer"]:
-            result_placeholder.markdown(
-                f"""<div class="fade-message" style="color: white; font-size: 18px; background-color: green;
-                padding: 10px; border-radius: 8px;">{q["correct_msg"]}</div>""", unsafe_allow_html=True
-            )
-        else:
-            result_placeholder.markdown(
-                f"""<div class="fade-message" style="color: white; font-size: 18px; background-color: red;
-                padding: 10px; border-radius: 8px;">{q["wrong_msg"]}</div>""", unsafe_allow_html=True
-            )
-        st.markdown("<script>setTimeout(fadeText, 3000);</script>", unsafe_allow_html=True)
+        if user_response:
+            st.session_state.responses[current_index] = user_response
+            st.session_state.submitted[current_index] = True
 
-    # Navigation (Next only)
-    if current_index < len(questions) - 1:
+            if user_response == q["answer"]:
+                result_placeholder.markdown(
+                    f"""<div class="fade-message" style="color: white; font-size: 18px; background-color: green;
+                    padding: 10px; border-radius: 8px;">{q["correct_msg"]}</div>""", unsafe_allow_html=True
+                )
+            else:
+                result_placeholder.markdown(
+                    f"""<div class="fade-message" style="color: white; font-size: 18px; background-color: red;
+                    padding: 10px; border-radius: 8px;">{q["wrong_msg"]}</div>""", unsafe_allow_html=True
+                )
+
+            st.markdown("<script>setTimeout(fadeText, 3000);</script>", unsafe_allow_html=True)
+
+    # Show Next only if answer was submitted
+    if st.session_state.submitted[current_index] and current_index < len(questions) - 1:
         if st.button("Next ➡"):
             st.session_state.current_q += 1
