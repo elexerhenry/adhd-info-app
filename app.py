@@ -62,9 +62,9 @@ st.markdown("""
     });
 
     // Function to make text fade away after 3 seconds
-    function fadeText(selector) {
+    function fadeText() {
         setTimeout(function() {
-            var element = document.querySelector(selector);
+            var element = document.querySelector('.stToast');
             if (element) {
                 element.style.transition = 'opacity 1s ease';
                 element.style.opacity = 0;
@@ -121,6 +121,6 @@ with tab2:
         # JavaScript to fade the message after 3 seconds
         st.markdown("""
             <script>
-                fadeText('.stToast');
+                fadeText();
             </script>
         """, unsafe_allow_html=True)
