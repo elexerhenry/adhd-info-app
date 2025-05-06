@@ -60,6 +60,20 @@ st.markdown("""
             e.style.marginBottom = '4px';
         });
     });
+
+    // Function to make text fade away after 3 seconds
+    function fadeText(selector) {
+        setTimeout(function() {
+            var element = document.querySelector(selector);
+            if (element) {
+                element.style.transition = 'opacity 1s ease';
+                element.style.opacity = 0;
+                setTimeout(function() {
+                    element.remove();
+                }, 1000);
+            }
+        }, 3000);
+    }
     </script>
 """, unsafe_allow_html=True)
 
@@ -97,7 +111,16 @@ with tab2:
     user_answer = st.radio(question, options)
 
     if st.button("Submit Answer"):
+        result_placeholder = st.empty()  # Create a placeholder to display messages
+
         if user_answer == answer:
-            st.success("✅ Correct! Difficulty paying attention is a common symptom.")
+            result_placeholder.success("✅ Correct! Difficulty paying attention is a common symptom.")
         else:
-            st.error("❌ Sorry, but that's incorrect. Try again!")
+            result_placeholder.error("❌ Sorry, but that's incorrect. Try again!")
+
+        # JavaScript to fade the message after 3 seconds
+        st.markdown("""
+            <script>
+                fadeText('.stToast');
+            </script>
+        """, unsafe_allow_html=True)
