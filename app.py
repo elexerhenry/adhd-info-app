@@ -3,23 +3,23 @@ import streamlit as st
 # Set page config
 st.set_page_config(page_title="ADHD Info App", layout="centered")
 
-# Inject more specific CSS for Streamlit expanders
+# Inject updated CSS
 st.markdown("""
     <style>
     .stApp {
         background-color: #E56742;
     }
 
-    /* More specific target for expander headers */
-    div[role="button"] > div:first-child {
+    /* Force larger expander titles */
+    details > summary {
         font-size: 1.6rem !important;
         font-weight: bold !important;
-        color: white !important;
+        color: #ffffff !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# App content
+# Page content
 st.title("Understanding the Effects of ADHD")
 st.markdown("Click on an icon to learn more about each effect:")
 
