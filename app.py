@@ -10,7 +10,6 @@ st.markdown("""
         background-color: #E56742;
     }
 
-    /* Style the entire expander block */
     [data-testid="stExpander"] {
         background-color: #ff9966;
         border-radius: 8px;
@@ -18,17 +17,6 @@ st.markdown("""
         padding: 5px;
     }
 
-    /* Force font size and border on expander title */
-    section[data-testid="stExpander"] > details > summary {
-        font-size: 30px !important;
-        font-weight: bold !important;
-        color: white !important;
-        border: 2px solid white !important;
-        border-radius: 6px;
-        padding: 10px;
-    }
-
-    /* Style inside content */
     .stMarkdown {
         font-size: 18px;
         color: white;
@@ -36,17 +24,25 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# App content
+# App title and instructions
 st.title("Understanding the Effects of ADHD")
 st.markdown("Click on an icon to learn more about each effect:")
 
+# ADHD information
 adhd_effects = {
     "🧠 Inattention": "People with ADHD may have trouble staying focused, get easily distracted, or avoid tasks that require sustained attention.",
     "⚡ Impulsivity": "Impulsivity includes interrupting others, making quick decisions without thinking, or difficulty waiting your turn.",
     "🏃 Hyperactivity": "Hyperactivity might look like fidgeting, restlessness, or feeling the need to constantly move or talk.",
 }
 
-# Create dropdowns
+# Dropdowns with large internal headers
 for label, description in adhd_effects.items():
-    with st.expander(label):
-        st.markdown(description)
+    with st.expander(" "):  # visually empty label
+        st.markdown(
+            f"<div style='font-size: 32px; font-weight: bold; color: white; margin-bottom: 10px;'>{label}</div>",
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f"<div style='font-size: 18px; color: white;'>{description}</div>",
+            unsafe_allow_html=True
+        )
