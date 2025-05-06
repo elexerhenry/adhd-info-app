@@ -1,20 +1,19 @@
 import streamlit as st
 
-# Set page title and layout
+# Set page config
 st.set_page_config(page_title="ADHD Info App", layout="centered")
 
-# Inject custom CSS to change background color
+# Inject custom CSS to change full app background
 st.markdown("""
     <style>
-    body {
+    .stApp {
         background-color: #FF7C52;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# App title and intro
+# App content
 st.title("Understanding the Effects of ADHD")
-
 st.markdown("Click on an icon to learn more about each effect:")
 
 # ADHD effects and descriptions
@@ -24,7 +23,7 @@ adhd_effects = {
     "Hyperactivity": "Fidgeting, restlessness, or an inability to stay still are common symptoms.",
 }
 
-# Display each effect in an expandable section
+# Display each effect with expander
 for label, description in adhd_effects.items():
     with st.expander(f"🧠 {label}"):
         st.write(description)
