@@ -45,34 +45,22 @@ st.markdown("""
     [data-baseweb="tab"][aria-selected="true"] {
         background-color: rgba(255, 255, 255, 0.2);
     }
+
+    .fade-message {
+        transition: opacity 1s ease;
+        opacity: 1;
+    }
     </style>
 
     <script>
-    window.addEventListener('load', function() {
-        const expanders = window.parent.document.querySelectorAll('summary');
-        expanders.forEach(e => {
-            e.style.fontSize = '30px';
-            e.style.fontWeight = 'bold';
-            e.style.color = 'white';
-            e.style.border = '2px solid white';
-            e.style.borderRadius = '6px';
-            e.style.padding = '12px';
-            e.style.marginBottom = '4px';
-        });
-    });
-
-    // Function to make text fade away after 3 seconds
     function fadeText() {
-        setTimeout(function() {
-            var element = document.querySelector('.stToast');
-            if (element) {
-                element.style.transition = 'opacity 1s ease';
-                element.style.opacity = 0;
-                setTimeout(function() {
-                    element.remove();
-                }, 1000);
-            }
-        }, 3000);
+        const message = document.querySelector('.fade-message');
+        if (message) {
+            message.style.opacity = 0;
+            setTimeout(function() {
+                message.remove();
+            }, 1000);  // Remove the element after fading
+        }
     }
     </script>
 """, unsafe_allow_html=True)
@@ -114,13 +102,23 @@ with tab2:
         result_placeholder = st.empty()  # Create a placeholder to display messages
 
         if user_answer == answer:
-            result_placeholder.success("✅ Correct! Difficulty paying attention is a common symptom.")
+            # Use custom HTML for success message
+            result_placeholder.markdown("""
+                <div class="fade-message" style="color: white; font-size: 18px; background-color: green; padding: 10px; border-radius: 8px;">
+                    ✅ Correct! Difficulty paying attention is a common symptom.
+                </div>
+            """, unsafe_allow_html=True)
         else:
-            result_placeholder.error("❌ Sorry, but that's incorrect. Try again!")
+            # Use custom HTML for error message
+            result_placeholder.markdown("""
+                <div class="fade-message" style="color: white; font-size: 18px; background-color: red; padding: 10px; border-radius: 8px;">
+                    ❌ Sorry, but that's incorrect. Try again!
+                </div>
+            """, unsafe_allow_html=True)
 
         # JavaScript to fade the message after 3 seconds
         st.markdown("""
             <script>
-                fadeText();
+                setTimeout(fadeText, 3000);  // Wait 3 seconds before fading
             </script>
         """, unsafe_allow_html=True)
