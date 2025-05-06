@@ -3,11 +3,11 @@ import streamlit as st
 # Set page config
 st.set_page_config(page_title="ADHD Info App", layout="centered")
 
-# Inject custom CSS to change full app background
+# Inject custom CSS with darker background
 st.markdown("""
     <style>
     .stApp {
-        background-color: #FF7C52;
+        background-color: #E56742;
     }
     </style>
 """, unsafe_allow_html=True)
