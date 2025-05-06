@@ -10,7 +10,7 @@ st.markdown("""
         background-color: #E56742;
     }
 
-    /* Style each expander box */
+    /* Style the entire expander block */
     [data-testid="stExpander"] {
         background-color: #ff9966;
         border-radius: 8px;
@@ -18,8 +18,8 @@ st.markdown("""
         padding: 5px;
     }
 
-    /* Style the expander title */
-    [data-testid="stExpander"] summary {
+    /* Force font size and border on expander title */
+    section[data-testid="stExpander"] > details > summary {
         font-size: 30px !important;
         font-weight: bold !important;
         color: white !important;
@@ -28,7 +28,7 @@ st.markdown("""
         padding: 10px;
     }
 
-    /* Style the paragraph content */
+    /* Style inside content */
     .stMarkdown {
         font-size: 18px;
         color: white;
@@ -36,11 +36,10 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Title and instructions
+# App content
 st.title("Understanding the Effects of ADHD")
 st.markdown("Click on an icon to learn more about each effect:")
 
-# ADHD sections
 adhd_effects = {
     "🧠 Inattention": "People with ADHD may have trouble staying focused, get easily distracted, or avoid tasks that require sustained attention.",
     "⚡ Impulsivity": "Impulsivity includes interrupting others, making quick decisions without thinking, or difficulty waiting your turn.",
