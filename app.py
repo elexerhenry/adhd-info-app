@@ -100,4 +100,4 @@ with tab2:
         if user_answer == answer:
             st.success("✅ Correct! Difficulty paying attention is a common symptom.")
         else:
-            st.error("❌ Incorrect. The correct answer is: 'Difficulty paying attention'.")
+            st.error("❌ Sorry, but that's incorrect. Try again!")
