@@ -102,4 +102,68 @@ with tab2:
     # Store quiz questions
     questions = [
         {
-            "qu
+            "question": "Which of the following is a common symptom of ADHD?",
+            "options": [
+                "Feeling sad most of the day",
+                "Experiencing hallucinations",
+                "Difficulty paying attention",
+                "Sudden muscle spasms"
+            ],
+            "answer": "Difficulty paying attention",
+            "correct_msg": "✅ Correct! Difficulty paying attention is a common symptom.",
+            "wrong_msg": "❌ Sorry, but that's incorrect. Try again!"
+        },
+        {
+            "question": "How does a person have ADHD?",
+            "options": [
+                "Genetics",
+                "Gender",
+                "Age",
+                "Doctor's fault"
+            ],
+            "answer": "Genetics",
+            "correct_msg": "✅ Correct! People obtain ADHD from genetics.",
+            "wrong_msg": "❌ Sorry, but that's incorrect. Try again!"
+        }
+    ]
+
+    # Initialize session state
+    if "current_q" not in st.session_state:
+        st.session_state.current_q = 0
+    if "responses" not in st.session_state:
+        st.session_state.responses = [None] * len(questions)
+
+    current_index = st.session_state.current_q
+    q = questions[current_index]
+
+    # Render question and options
+    st.subheader(f"Question {current_index + 1}")
+    user_response = st.radio(q["question"], q["options"], key=f"question_{current_index}")
+
+    result_placeholder = st.empty()
+
+    # Submit button
+    if st.button("Submit Answer"):
+        st.session_state.responses[current_index] = user_response
+        if user_response == q["answer"]:
+            result_placeholder.markdown(
+                f"""<div class="fade-message" style="color: white; font-size: 18px; background-color: green;
+                padding: 10px; border-radius: 8px;">{q["correct_msg"]}</div>""", unsafe_allow_html=True
+            )
+        else:
+            result_placeholder.markdown(
+                f"""<div class="fade-message" style="color: white; font-size: 18px; background-color: red;
+                padding: 10px; border-radius: 8px;">{q["wrong_msg"]}</div>""", unsafe_allow_html=True
+            )
+        st.markdown("<script>setTimeout(fadeText, 3000);</script>", unsafe_allow_html=True)
+
+    # Navigation buttons
+    col1, col2, col3 = st.columns([1, 2, 1])
+
+    with col1:
+        if current_index > 0 and st.button("⬅ Back"):
+            st.session_state.current_q -= 1
+
+    with col3:
+        if current_index < len(questions) - 1 and st.button("Next ➡"):
+            st.session_state.current_q += 1
