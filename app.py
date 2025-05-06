@@ -38,18 +38,41 @@ st.markdown("""
     </script>
 """, unsafe_allow_html=True)
 
-# Title and instructions
-st.title("Understanding the Effects of ADHD")
-st.markdown("Click on an icon to learn more about each effect:")
+# Tabs for content
+tab1, tab2 = st.tabs(["📘 ADHD Info", "📝 Quiz"])
 
-# ADHD effects content
-adhd_effects = {
-    "🧠 Inattention": "People with ADHD may have trouble staying focused, get easily distracted, or avoid tasks that require sustained attention.",
-    "⚡ Impulsivity": "Impulsivity includes interrupting others, making quick decisions without thinking, or difficulty waiting your turn.",
-    "🏃 Hyperactivity": "Hyperactivity might look like fidgeting, restlessness, or feeling the need to constantly move or talk.",
-}
+# --- TAB 1: ADHD Information ---
+with tab1:
+    st.title("Understanding the Effects of ADHD")
+    st.markdown("Click on an icon to learn more about each effect:")
 
-# Render dropdowns
-for label, description in adhd_effects.items():
-    with st.expander(label):
-        st.markdown(f"<div style='font-size: 18px; color: white;'>{description}</div>", unsafe_allow_html=True)
+    adhd_effects = {
+        "🧠 Inattention": "People with ADHD may have trouble staying focused, get easily distracted, or avoid tasks that require sustained attention.",
+        "⚡ Impulsivity": "Impulsivity includes interrupting others, making quick decisions without thinking, or difficulty waiting your turn.",
+        "🏃 Hyperactivity": "Hyperactivity might look like fidgeting, restlessness, or feeling the need to constantly move or talk.",
+    }
+
+    for label, description in adhd_effects.items():
+        with st.expander(label):
+            st.markdown(f"<div style='font-size: 18px; color: white;'>{description}</div>", unsafe_allow_html=True)
+
+# --- TAB 2: Quiz ---
+with tab2:
+    st.title("Test Your Knowledge About ADHD")
+
+    question = "Which of the following is a common symptom of ADHD?"
+    options = [
+        "Feeling sad most of the day",
+        "Experiencing hallucinations",
+        "Difficulty paying attention",
+        "Sudden muscle spasms"
+    ]
+    answer = "Difficulty paying attention"
+
+    user_answer = st.radio(question, options)
+
+    if st.button("Submit Answer"):
+        if user_answer == answer:
+            st.success("✅ Correct! Difficulty paying attention is a common symptom.")
+        else:
+            st.error("❌ Incorrect. The correct answer is: 'Difficulty paying attention'.")
