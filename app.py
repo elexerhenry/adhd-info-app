@@ -20,6 +20,31 @@ st.markdown("""
         font-size: 18px;
         color: white;
     }
+
+    /* Style for the tab headers */
+    [data-baseweb="tab-list"] {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    [data-baseweb="tab"] {
+        border: 2px solid white;
+        border-radius: 12px;
+        padding: 8px 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        background-color: transparent;
+        transition: background-color 0.3s;
+    }
+
+    [data-baseweb="tab"]:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-baseweb="tab"][aria-selected="true"] {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
     </style>
 
     <script>
