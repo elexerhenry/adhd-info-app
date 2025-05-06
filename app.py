@@ -3,11 +3,18 @@ import streamlit as st
 # Set page config
 st.set_page_config(page_title="ADHD Info App", layout="centered")
 
-# Inject custom CSS with darker background
+# Inject custom CSS for background and expander titles
 st.markdown("""
     <style>
     .stApp {
         background-color: #E56742;
+    }
+
+    /* Style expander labels */
+    .streamlit-expanderHeader {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #ffffff;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -23,7 +30,7 @@ adhd_effects = {
     "Hyperactivity": "Fidgeting, restlessness, or an inability to stay still are common symptoms.",
 }
 
-# Display each effect with expander
+# Display each effect with styled expanders
 for label, description in adhd_effects.items():
     with st.expander(f"🧠 {label}"):
         st.write(description)
