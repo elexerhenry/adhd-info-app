@@ -112,12 +112,9 @@ with tab1:
         with st.expander(label):
             st.markdown(f"<div style='font-size: 18px; color: white;'>{description}</div>", unsafe_allow_html=True)
 
-    # Add the "Click me" box with the white border
-    st.markdown("""
-        <div class="click-me-box">
-            Click me (I dare you!)
-        </div>
-    """, unsafe_allow_html=True)
+    # Add the "Click me" box with the white border using st.button
+    if st.button('Click me (I dare you!)', key="click_me_box", help="Click this box to reveal something fun!"):
+        st.markdown("<div class='fade-message' style='color: white; font-size: 18px;'>You clicked the box!</div>", unsafe_allow_html=True)
 
 # --- Tab 2: Quiz ---
 with tab2:
