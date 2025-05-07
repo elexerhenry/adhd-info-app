@@ -50,35 +50,6 @@ st.markdown("""
         opacity: 1;
     }
     </style>
-
-    <script>
-    window.addEventListener('load', function() {
-        const expanders = window.parent.document.querySelectorAll('summary');
-        expanders.forEach(e => {
-            e.style.fontSize = '30px';
-            e.style.fontWeight = 'bold';
-            e.style.color = 'white';
-            e.style.border = '2px solid white';
-            e.style.borderRadius = '6px';
-            e.style.padding = '12px';
-            e.style.marginBottom = '4px';
-        });
-    });
-
-    function fadeText() {
-        const message = document.querySelector('.fade-message');
-        if (message) {
-            message.style.opacity = 0;
-            setTimeout(function() {
-                message.remove();
-            }, 1000);
-        }
-    }
-
-    function openLink() {
-        window.open("https://i.pinimg.com/564x/c6/3e/cd/c63ecdcc786bb3fb3078775f73826d52.jpg", "_blank");
-    }
-    </script>
 """, unsafe_allow_html=True)
 
 # Tabs
@@ -186,6 +157,11 @@ with tab3:
     <p style='font-size:18px; color:white;'>You really shouldn't click this, but if you do, enjoy the surprise!</p>
     """, unsafe_allow_html=True)
 
-    # Add a button to open the link in a new tab
-    if st.button("Click me (I dare you!)"):
-        st.markdown("<script>openLink();</script>", unsafe_allow_html=True)
+    # HTML anchor tag to open the image URL in a new tab
+    st.markdown("""
+    <a href="https://i.pinimg.com/564x/c6/3e/cd/c63ecdcc786bb3fb3078775f73826d52.jpg" target="_blank">
+        <button style="background-color: #ff6666; color: white; padding: 10px; border-radius: 6px; font-size: 18px; cursor: pointer;">
+            Click me (I dare you!)
+        </button>
+    </a>
+    """, unsafe_allow_html=True)
