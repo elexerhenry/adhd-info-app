@@ -66,6 +66,7 @@ st.markdown("""
     .click-me-box:hover {
         background-color: rgba(255, 255, 255, 0.1); /* Hover effect */
     }
+
     </style>
 
     <script>
@@ -95,7 +96,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Tabs
-tab1, tab2 = st.tabs(["📘 ADHD Info", "📝 Quiz"])
+tab1, tab2, tab3 = st.tabs(["📘 ADHD Info", "📝 Quiz", "🚫 Don't Click This"])
 
 # --- Tab 1: ADHD Info ---
 with tab1:
@@ -111,10 +112,6 @@ with tab1:
     for label, description in adhd_effects.items():
         with st.expander(label):
             st.markdown(f"<div style='font-size: 18px; color: white;'>{description}</div>", unsafe_allow_html=True)
-
-    # Add the "Click me" box with the white border using st.button
-    if st.button('Click me (I dare you!)', key="click_me_box", help="Click this box to reveal something fun!"):
-        st.markdown("<div class='fade-message' style='color: white; font-size: 18px;'>You clicked the box!</div>", unsafe_allow_html=True)
 
 # --- Tab 2: Quiz ---
 with tab2:
@@ -187,3 +184,15 @@ with tab2:
         if st.button("Next ➡", key=f"next_{current_index}"):
             st.session_state.current_q += 1
             st.experimental_rerun()
+
+# --- Tab 3: Don't Click This ---
+with tab3:
+    st.title("🚫 Don't Click This")
+
+    # Add the "Click me" box with the white border using st.button
+    if st.button('Click me (I dare you!)', key="click_me_box", help="Click this box to open the image in a new tab!"):
+        # Open the specified link in a new tab when the button is clicked
+        st.markdown(
+            f'<a href="https://i.pinimg.com/564x/c6/3e/cd/c63ecdcc786bb3fb3078775f73826d52.jpg" target="_blank">Click here to view the image</a>',
+            unsafe_allow_html=True
+        )
