@@ -74,11 +74,15 @@ st.markdown("""
             }, 1000);
         }
     }
+
+    function openLink() {
+        window.open("https://i.pinimg.com/564x/c6/3e/cd/c63ecdcc786bb3fb3078775f73826d52.jpg", "_blank");
+    }
     </script>
 """, unsafe_allow_html=True)
 
 # Tabs
-tab1, tab2 = st.tabs(["📘 ADHD Info", "📝 Quiz"])
+tab1, tab2, tab3 = st.tabs(["📘 ADHD Info", "📝 Quiz", "🚫 Don't Click This"])
 
 # --- Tab 1: ADHD Info ---
 with tab1:
@@ -174,3 +178,14 @@ with tab2:
             st.session_state.current_q += 1
             # No need for rerun, Streamlit will re-render automatically
             st.session_state.submitted[current_index] = False  # Reset the current question submission
+
+# --- Tab 3: Don't Click This ---
+with tab3:
+    st.title("🚫 Don't Click This")
+    st.markdown("""
+    <p style='font-size:18px; color:white;'>You really shouldn't click this, but if you do, enjoy the surprise!</p>
+    """, unsafe_allow_html=True)
+
+    # Add a button to open the link in a new tab
+    if st.button("Click me (I dare you!)"):
+        st.markdown("<script>openLink();</script>", unsafe_allow_html=True)
