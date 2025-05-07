@@ -49,11 +49,53 @@ st.markdown("""
         transition: opacity 1s ease;
         opacity: 1;
     }
+
+    /* New CSS for the white border around the "Click me" box */
+    .click-me-box {
+        border: 3px solid white !important;  /* Set border to white */
+        padding: 20px;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.2);
+        text-align: center;
+        font-weight: bold;
+        color: white;
+        font-size: 20px;
+        transition: background-color 0.3s;
+    }
+
+    .click-me-box:hover {
+        background-color: rgba(255, 255, 255, 0.1); /* Hover effect */
+    }
     </style>
+
+    <script>
+    window.addEventListener('load', function() {
+        const expanders = window.parent.document.querySelectorAll('summary');
+        expanders.forEach(e => {
+            e.style.fontSize = '30px';
+            e.style.fontWeight = 'bold';
+            e.style.color = 'white';
+            e.style.border = '2px solid white';
+            e.style.borderRadius = '6px';
+            e.style.padding = '12px';
+            e.style.marginBottom = '4px';
+        });
+    });
+
+    function fadeText() {
+        const message = document.querySelector('.fade-message');
+        if (message) {
+            message.style.opacity = 0;
+            setTimeout(function() {
+                message.remove();
+            }, 1000);
+        }
+    }
+    </script>
 """, unsafe_allow_html=True)
 
 # Tabs
-tab1, tab2, tab3 = st.tabs(["📘 ADHD Info", "📝 Quiz", "🚫 Don't Click This"])
+tab1, tab2 = st.tabs(["📘 ADHD Info", "📝 Quiz"])
 
 # --- Tab 1: ADHD Info ---
 with tab1:
@@ -69,6 +111,13 @@ with tab1:
     for label, description in adhd_effects.items():
         with st.expander(label):
             st.markdown(f"<div style='font-size: 18px; color: white;'>{description}</div>", unsafe_allow_html=True)
+
+    # Add the "Click me" box with the white border
+    st.markdown("""
+        <div class="click-me-box">
+            Click me (I dare you!)
+        </div>
+    """, unsafe_allow_html=True)
 
 # --- Tab 2: Quiz ---
 with tab2:
@@ -134,34 +183,10 @@ with tab2:
                     padding: 10px; border-radius: 8px;">{q["wrong_msg"]}</div>""", unsafe_allow_html=True
                 )
 
-            # Only show fade effect after a short delay
-            st.session_state.fade_message = True
-
-    # Handle the fade-out effect and navigation
-    if 'fade_message' in st.session_state and st.session_state.fade_message:
-        st.markdown("<script>setTimeout(fadeText, 3000);</script>", unsafe_allow_html=True)
-        st.session_state.fade_message = False
+            st.markdown("<script>setTimeout(fadeText, 3000);</script>", unsafe_allow_html=True)
 
     # Show "Next" only if answer was submitted
     if st.session_state.submitted[current_index] and current_index < len(questions) - 1:
-        # Update the session state to move to the next question
         if st.button("Next ➡", key=f"next_{current_index}"):
             st.session_state.current_q += 1
-            # No need for rerun, Streamlit will re-render automatically
-            st.session_state.submitted[current_index] = False  # Reset the current question submission
-
-# --- Tab 3: Don't Click This ---
-with tab3:
-    st.title("🚫 Don't Click This")
-    st.markdown("""
-    <p style='font-size:18px; color:white;'>You really shouldn't click this, but if you do, enjoy the surprise!</p>
-    """, unsafe_allow_html=True)
-
-    # HTML anchor tag to open the image URL in a new tab
-    st.markdown("""
-    <a href="https://i.pinimg.com/564x/c6/3e/cd/c63ecdcc786bb3fb3078775f73826d52.jpg" target="_blank">
-        <button style="background-color: #ff6666; color: white; padding: 10px; border-radius: 6px; font-size: 18px; cursor: pointer;">
-            Click me (I dare you!)
-        </button>
-    </a>
-    """, unsafe_allow_html=True)
+            st.experimental_rerun()
