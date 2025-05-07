@@ -50,9 +50,8 @@ st.markdown("""
         opacity: 1;
     }
 
-    /* New CSS for the white border around the "Click me" box */
     .click-me-box {
-        border: 3px solid white !important;  /* Set border to white */
+        border: 3px solid white !important;
         padding: 20px;
         border-radius: 8px;
         background-color: rgba(0, 0, 0, 0.2);
@@ -61,12 +60,12 @@ st.markdown("""
         color: white;
         font-size: 20px;
         transition: background-color 0.3s;
+        cursor: pointer;
     }
 
     .click-me-box:hover {
-        background-color: rgba(255, 255, 255, 0.1); /* Hover effect */
+        background-color: rgba(255, 255, 255, 0.1);
     }
-
     </style>
 
     <script>
@@ -117,7 +116,6 @@ with tab1:
 with tab2:
     st.title("Test Your Knowledge About ADHD")
 
-    # Questions
     questions = [
         {
             "question": "Which of the following is a common symptom of ADHD?",
@@ -145,54 +143,35 @@ with tab2:
         }
     ]
 
-    # Session state
-    if "current_q" not in st.session_state:
-        st.session_state.current_q = 0
-    if "responses" not in st.session_state:
-        st.session_state.responses = [None] * len(questions)
-    if "submitted" not in st.session_state:
-        st.session_state.submitted = [False] * len(questions)
+    # Initialize state
+    if "quiz_index" not in st.session_state:
+        st.session_state.quiz_index = 0
+    if "quiz_answers" not in st.session_state:
+        st.session_state.quiz_answers = [None] * len(questions)
 
-    current_index = st.session_state.current_q
-    q = questions[current_index]
+    index = st.session_state.quiz_index
+    q = questions[index]
 
-    st.subheader(f"Question {current_index + 1}")
-    user_response = st.radio(q["question"], q["options"], key=f"question_{current_index}")
+    st.subheader(f"Question {index + 1} of {len(questions)}")
+    user_choice = st.radio(q["question"], q["options"], key=f"radio_{index}")
 
-    result_placeholder = st.empty()
+    if st.button("Submit Answer"):
+        st.session_state.quiz_answers[index] = user_choice
 
-    if st.button("Submit Answer", key=f"submit_{current_index}"):
-        if user_response:
-            st.session_state.responses[current_index] = user_response
-            st.session_state.submitted[current_index] = True
+        if user_choice == q["answer"]:
+            st.success(q["correct_msg"])
+        else:
+            st.error(q["wrong_msg"])
 
-            if user_response == q["answer"]:
-                result_placeholder.markdown(
-                    f"""<div class="fade-message" style="color: white; font-size: 18px; background-color: green;
-                    padding: 10px; border-radius: 8px;">{q["correct_msg"]}</div>""", unsafe_allow_html=True
-                )
-            else:
-                result_placeholder.markdown(
-                    f"""<div class="fade-message" style="color: white; font-size: 18px; background-color: red;
-                    padding: 10px; border-radius: 8px;">{q["wrong_msg"]}</div>""", unsafe_allow_html=True
-                )
-
-            st.markdown("<script>setTimeout(fadeText, 3000);</script>", unsafe_allow_html=True)
-
-    # Show "Next" only if answer was submitted
-    if st.session_state.submitted[current_index] and current_index < len(questions) - 1:
-        if st.button("Next ➡", key=f"next_{current_index}"):
-            st.session_state.current_q += 1
-            st.experimental_rerun()
+    if st.session_state.quiz_answers[index] is not None and index < len(questions) - 1:
+        if st.button("Next ➡"):
+            st.session_state.quiz_index += 1
 
 # --- Tab 3: Don't Click This ---
 with tab3:
     st.title("🚫 Don't Click This")
-
-    # Add the "Click me" box with the white border using st.button
-    if st.button('Click me (I dare you!)', key="click_me_box", help="Click this box to open the image in a new tab!"):
-        # Open the specified link in a new tab when the button is clicked
-        st.markdown(
-            f'<a href="https://i.pinimg.com/564x/c6/3e/cd/c63ecdcc786bb3fb3078775f73826d52.jpg" target="_blank">Click here to view the image</a>',
-            unsafe_allow_html=True
-        )
+    st.markdown("""
+        <a href="https://i.pinimg.com/564x/c6/3e/cd/c63ecdcc786bb3fb3078775f73826d52.jpg" target="_blank">
+            <div class="click-me-box">Click me (I dare you!)</div>
+        </a>
+    """, unsafe_allow_html=True)
