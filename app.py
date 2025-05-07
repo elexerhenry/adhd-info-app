@@ -169,6 +169,8 @@ with tab2:
 
     # Show "Next" only if answer was submitted
     if st.session_state.submitted[current_index] and current_index < len(questions) - 1:
+        # Update the session state to move to the next question
         if st.button("Next ➡", key=f"next_{current_index}"):
             st.session_state.current_q += 1
-            st.experimental_rerun()
+            # No need for rerun, Streamlit will re-render automatically
+            st.session_state.submitted[current_index] = False  # Reset the current question submission
