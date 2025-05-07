@@ -143,7 +143,7 @@ with tab2:
 
     result_placeholder = st.empty()
 
-    if st.button("Submit Answer"):
+    if st.button("Submit Answer", key=f"submit_{current_index}"):
         if user_response:
             st.session_state.responses[current_index] = user_response
             st.session_state.submitted[current_index] = True
@@ -161,7 +161,8 @@ with tab2:
 
             st.markdown("<script>setTimeout(fadeText, 3000);</script>", unsafe_allow_html=True)
 
-    # Show Next only if answer was submitted
+    # Show "Next" only if answer was submitted
     if st.session_state.submitted[current_index] and current_index < len(questions) - 1:
-        if st.button("Next ➡"):
+        if st.button("Next ➡", key=f"next_{current_index}"):
             st.session_state.current_q += 1
+            st.experimental_rerun()
