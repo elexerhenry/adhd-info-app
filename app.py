@@ -159,7 +159,13 @@ with tab2:
                     padding: 10px; border-radius: 8px;">{q["wrong_msg"]}</div>""", unsafe_allow_html=True
                 )
 
-            st.markdown("<script>setTimeout(fadeText, 3000);</script>", unsafe_allow_html=True)
+            # Only show fade effect after a short delay
+            st.session_state.fade_message = True
+
+    # Handle the fade-out effect and navigation
+    if 'fade_message' in st.session_state and st.session_state.fade_message:
+        st.markdown("<script>setTimeout(fadeText, 3000);</script>", unsafe_allow_html=True)
+        st.session_state.fade_message = False
 
     # Show "Next" only if answer was submitted
     if st.session_state.submitted[current_index] and current_index < len(questions) - 1:
